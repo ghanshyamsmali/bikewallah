@@ -59,11 +59,9 @@ export default function Navbar() {
             </MDBNavbarItem>
     
             <MDBNavbarItem>
-            <MDBNavbarLink href ="/Aboutus">Aboutus</MDBNavbarLink>
+            <MDBNavbarLink href ="/About">Aboutus</MDBNavbarLink>
             </MDBNavbarItem>
-            <MDBNavbarItem>
-            <MDBNavbarLink href ="/Contactus">Contactus</MDBNavbarLink>
-            </MDBNavbarItem>
+           
             <MDBNavbarItem>
               <MDBNavbarLink href='/AppLogin'>Login</MDBNavbarLink>
             </MDBNavbarItem>
@@ -71,14 +69,17 @@ export default function Navbar() {
               <MDBNavbarLink href='/MyRegistration'>Signup</MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
-              <MDBNavbarLink href='/user-list'>user-list</MDBNavbarLink>
+              <MDBNavbarLink href='/user-list'>Our Customers</MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
+            <MDBNavbarLink href ="/Contactus">Contactus</MDBNavbarLink>
+            </MDBNavbarItem>
+            {/* <MDBNavbarItem>
               <MDBNavbarLink href='/Contactus'>Contactus</MDBNavbarLink>
-            </MDBNavbarItem>
-             <MDBNavbarItem>
+            </MDBNavbarItem> */}
+             {/* <MDBNavbarItem>
               <MDBNavbarLink href='/Contactus'>Logout</MDBNavbarLink>
-            </MDBNavbarItem>
+            </MDBNavbarItem> */}
           
 {/* 
             <MDBNavbarItem>

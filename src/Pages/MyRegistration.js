@@ -1,67 +1,141 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import Footer from "../Component/Footer";
+
+
+
 
 function MyRegistration() {
-  let formRef = useRef();
-  let [isSuccess, setIsSuccess] = useState(false);
-  let [isError, setIsError] = useState(false);
-
-  let [user, setUser] = useState({
+  const [user, setUser] = useState({
     username: "",
     password: "",
     email: "",
     mobile: "",
   });
 
-  let handlerUsernameAction = (e) => {
-    let newuser = { ...user, username: e.target.value };
-    setUser(newuser);
+  const [errors, setErrors] = useState({});
+
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  let formRef = useRef();
+
+  const validateField = (fieldName, value) => {
+    let error = null;
+
+    if (fieldName === "username") {
+
+      error = value ? null : "Please enter a username";
+      
+    } else if (fieldName === "password") {
+      error = value ? null : "Please enter a password";
+    } else if (fieldName === "email") {
+      if (!value) {
+        error = "Please enter an email";
+      } else if (!/\S+@\S+\.\S+/.test(value)) {
+        error = "Please enter a valid email";
+      }
+    } else if (fieldName === "mobile") {
+      if (!value) {
+        error = "Please enter a mobile number";
+      } else if (!/^\d{10}$/.test(value)) {
+        error = "Please enter a valid 10-digit mobile number";
+      }
+    }
+
+    return error;
   };
 
-  let handlerPasswordAction = (e) => {
-    let newuser = { ...user, password: e.target.value };
-    setUser(newuser);
+  const handleUsernameAction = (e) => {
+    const value = e.target.value;
+    const error = validateField("username", value);
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      username: error,
+    }));
+
+    setUser((prevUser) => ({
+      ...prevUser,
+      username: value,
+    }));
   };
 
-  let handlerEmailAction = (e) => {
-    let newuser = { ...user, email: e.target.value };
-    setUser(newuser);
+  const handlePasswordAction = (e) => {
+    const value = e.target.value;
+    const error = validateField("password", value);
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      password: error,
+    }));
+
+    setUser((prevUser) => ({
+      ...prevUser,
+      password: value,
+    }));
   };
 
-  let handlerMobileAction = (e) => {
-    let newuser = { ...user, mobile: e.target.value };
-    setUser(newuser);
+  const handleEmailAction = (e) => {
+    const value = e.target.value;
+    const error = validateField("email", value);
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      email: error,
+    }));
+
+    setUser((prevUser) => ({
+      ...prevUser,
+      email: value,
+    }));
   };
 
-  let registerAction = async () => {
+  const handleMobileAction = (e) => {
+    const value = e.target.value;
+    const error = validateField("mobile", value);
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      mobile: error,
+    }));
+
+    setUser((prevUser) => ({
+      ...prevUser,
+      mobile: value,
+    }));
+  };
+
+  const registerAction = async () => {
     try {
-      formRef.current.classList.add("was-validated");
-      let formStatus = formRef.current.checkValidity();
-      if (!formStatus) {
+      const validationErrors = {};
+      Object.keys(user).forEach((key) => {
+        const error = validateField(key, user[key]);
+        if (error) {
+          validationErrors[key] = error;
+        }
+      });
+
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
         return;
       }
 
-      // BACKEND
-      let url = `http://localhost:4000/adduser?username=${user.username}&password=${user.password}&email=${user.email}&mobile=${user.mobile}`;
+      // Primary task of this method is to connect to the backend
+      const url = `http://localhost:4000/addUser?username=${user.username}&password=${user.password}&email=${user.email}&mobile=${user.mobile}`;
 
-      let res = await fetch(url);
-
-      if (res.status != 200) {
-        let serverMsg = await res.text();
-        throw new Error(serverMsg);
+      const res = await fetch(url);
+      if (res.status !== 200) {
+        throw new Error("Server Error");
+      } else {
+        setUser({
+          username: "",
+          password: "",
+          email: "",
+          mobile: "",
+        });
       }
 
-      let newuser = {
-        username: "",
-        password: "",
-        email: "",
-        mobile: "",
-      };
-      setUser(newuser);
-
       formRef.current.classList.remove("was-validated");
-
-      alert("success");
       setIsSuccess(true);
     } catch (err) {
       alert(err.message);
@@ -70,67 +144,97 @@ function MyRegistration() {
       setTimeout(() => {
         setIsSuccess(false);
         setIsError(false);
-      }, 5000);
+      }, 3000);
     }
   };
 
   return (
-    <>
-      <div className="row justify-content-center">
-        <div className="col-sm-12 col-md-6">
-          <div className="fs-2">Appliaction Form</div>
-
-          <form ref={formRef} className="needs-validation">
+    <div className="my-img2 d-flex flex-column">
+     
+    <h2 style={{textAlign: 'center', fontSize: 35, fontWeight: 'bold',marginTop: "5%"}}>Register with us</h2>
+      <div
+        className="row justify-content-center flex-grow-1"
+        style={{ marginTop: "1%",marginBottom: "5%"}}
+      >
+        <div className="col-sm-12 col-md-6 align-item-center">
+          <h1 className="text-center text-white">Sign Up</h1>
+          <form ref={formRef} className="needs-validation" noValidate>
             <input
               type="text"
-              className="form-control form-control-lg mb-2 mt-1"
-              placeholder="Enter username"
+              className={`form-control form-control-lg ${
+                errors.username ? "is-invalid" : ""
+              }`}
+              placeholder="Enter Username"
               value={user.username}
-              onChange={handlerUsernameAction}
+              onChange={handleUsernameAction}
               required
             />
+            {errors.username && (
+              <div className="invalid-feedback">{errors.username}</div>
+            )}
+
             <input
               type="password"
-              className="form-control form-control-lg mb-2"
-              placeholder="Enter password"
+              className={`form-control form-control-lg mt-2 ${
+                errors.password ? "is-invalid" : ""
+              }`}
+              placeholder="Enter Password"
               value={user.password}
-              onChange={handlerPasswordAction}
+              onChange={handlePasswordAction}
               required
             />
-            <input
-              type="email"
-              className="form-control form-control-lg mb-2"
-              placeholder="Enter Email"
-              value={user.email}
-              onChange={handlerEmailAction}
-              required
-            />
+            {errors.password && (
+              <div className="invalid-feedback">{errors.password}</div>
+            )}
+
             <input
               type="text"
-              className="form-control form-control-lg mb-2"
-              placeholder="Enter mobile"
-              value={user.mobile}
-              onChange={handlerMobileAction}
+              className={`form-control form-control-lg mt-2 ${
+                errors.email ? "is-invalid" : ""
+              }`}
+              placeholder="Enter E-mail"
+              value={user.email}
+              onChange={handleEmailAction}
               required
             />
+            {errors.email && (
+              <div className="invalid-feedback">{errors.email}</div>
+            )}
+
+            <input
+              type="number"
+              className={`form-control form-control-lg mt-2 ${
+                errors.mobile ? "is-invalid" : ""
+              }`}
+              placeholder="Enter Mobile Number"
+              value={user.mobile}
+              onChange={handleMobileAction}
+              required
+            />
+            {errors.mobile && (
+              <div className="invalid-feedback">{errors.mobile}</div>
+            )}
+
             <input
               type="button"
               value="Register"
-              className="w-100 btn btn-lg btn-secondary"
+              className="btn btn-secondary w-100 mt-2"
               onClick={registerAction}
             />
 
-            <div className="d-flex justify-content-center ">
-              <Link to={"/login"}>Existing User, Login here</Link>
-            </div>
+            {isSuccess && (
+              <div className="alert alert-success mt-3">Success</div>
+            )}
+            {isError && <div className="alert alert-danger mt-3">Error</div>}
           </form>
-
-          {isSuccess && <div className="alert alert-success">Success</div>}
-          {isError && <div className="alert alert-danger">Error</div>}
         </div>
       </div>
-    </>
+      <br/>
+      <br/>
+      <Footer/>
+    </div>
+
   );
 }
 
-export default MyRegistration;
+export default MyRegistration;

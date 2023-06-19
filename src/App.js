@@ -10,6 +10,7 @@ import AppLogin from "./Pages/AppLogin";
 import Motor from "./Pages/Motor";
 import MyUserList from "./Pages/MyUserList";
 import Navbar from "./Component/Navbar";
+import About from "./Pages/About";
 function App() {
   return (
     <>
@@ -40,10 +41,10 @@ function App() {
             }
           />
           <Route
-            path="/Aboutus"
+            path="/About"
             element={
             
-                <Aboutus />
+                <About />
               
             }
           />

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../Component/Footer";
 
 function AppLogin() {
   const navigate = useNavigate();
@@ -63,7 +64,8 @@ function AppLogin() {
     <>
       <div className="row justify-content-center">
         <div className="col-sm-12 col-md-6">
-          <div className="fs-2">Login Form</div>
+          {/* <div className="fs-2">Login Form</div> */}
+          <h2 style={{textAlign: 'center', fontSize: 35, fontWeight: 'bold',marginTop: "10%",marginBottom: "5%"}}>Signin</h2>
 
           <form ref={formRef} className="needs-validation">
             <input
@@ -100,6 +102,9 @@ function AppLogin() {
           {isError && <div className="alert alert-danger">Error</div>}
         </div>
       </div>
+      <br/>
+      <br/>
+      <Footer/>
     </>
   );
 }

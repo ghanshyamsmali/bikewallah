@@ -72,27 +72,27 @@ export default function Footer() {
             <MDBCol md='3' lg='2' xl='2' className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>Useful links</h6>
               <p>
-                <a href='#!' className='text-reset'>
+                <a href='/home' className='text-reset'>
                   Home
                 </a>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
+                <a href='/Motor' className='text-reset'>
                   Motor
                 </a>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
+                <a href='/About' className='text-reset'>
                   About Us
                 </a>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
+                <a href='/AppLogin' className='text-reset'>
                 Login
                 </a>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
+                <a href='/MyRegistration' className='text-reset'>
                 Signup
                 </a>
               </p>
@@ -102,11 +102,11 @@ export default function Footer() {
               <h6 className='text-uppercase fw-bold mb-4'>Contact</h6>
               <p>
                 <MDBIcon color='secondary' icon='home' className='me-2' />
-                CDAC juhu 
+                CDAC MUMBAI 
               </p>
               <p>
                 <MDBIcon color='secondary' icon='envelope' className='me-3' />
-                info@example.com
+                bikewallah@gmail.com
               </p>
               <p>
                 <MDBIcon color='secondary' icon='phone' className='me-3' /> + 99999 00000
