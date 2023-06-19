@@ -1,0 +1,29 @@
+.nav-item:hover
+{
+  background-color:orangered;
+}
+
+
+.navbar-brand {
+    font-size:2.5rem;
+    color:orangered;
+    font-weight:bold;
+  }
+
+  .card-title{
+    font-weight: bold;
+  }
+  .card-body{
+    text-align: center;
+  }
+  .btn{
+    background-color: rgb(251, 197, 177);
+    color: black;
+  }
+
+  .btn:hover {
+    background-color:orangered;
+  }
+  .button:hover {
+    background-color:orangered;
+  }
